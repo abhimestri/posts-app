@@ -5,7 +5,6 @@ const initialState = {
   localPosts: [],
   likedPost: [],
   dislikedPost: [],
-  temp: [],
   searchPosts: [],
 };
 
@@ -113,7 +112,7 @@ const postSlice = createSlice({
       );
       if (state.localPosts[postindex].liked) {
         state.localPosts[postindex].liked = false;
-        state.fetchedPosts = state.localPosts;
+        state.fetchedPosts[postindex].liked = false;
         state.likedPost = state.likedPost.filter(
           (el) => el.id !== action.payload.id
         );
@@ -136,17 +135,15 @@ const postSlice = createSlice({
         state.dislikedPost = state.dislikedPost.filter(
           (el) => el.id !== action.payload.id
         );
-        state.temp = state.localPosts;
       } else {
         state.localPosts[postindex].liked = false;
         state.localPosts[postindex].disliked = true;
+        state.fetchedPosts = state.localPosts;
         state.dislikedPost = state.dislikedPost.concat(action.payload);
         state.likedPost = state.likedPost.filter(
           (el) => el.id !== action.payload.id
         );
-        state.temp = state.localPosts;
       }
-      state.temp = state.localPosts;
     },
     searchedPosts(state, action) {
       state.searchPosts = state.fetchedPosts.filter((el) => {

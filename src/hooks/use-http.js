@@ -9,7 +9,7 @@ export const useHttp = async (method, body = null, id = "") => {
     );
     let res = await posts.json();
     if (method === "GET") {
-      return [...res].slice(0, 5);
+      return [...res];
     } else {
       return posts;
     }
